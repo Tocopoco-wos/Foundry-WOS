@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MVP Foundry Playbook</title>
+<meta name="description" content="MVP Alliance Foundry Battle playbook: squads, flips, teleport warning, buildings and calls. English and Türkçe.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:title" content="MVP Foundry Playbook">
+<meta property="og:description" content="Squads, flips, buildings and calls for Foundry Battle. English and Türkçe.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0D141C">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<style>
+/* Layout: one narrow scrolling column, sticky language switch on top; dark, foundry-fire accents. Single dark look by design. */
+:root {
+  --bg: #0D141C;
+  --surface: #151F2A;
+  --line: #243243;
+  --fg: #ECF1F6;
+  --muted: #A3B3C4;
+  --strike: #F59E4C;
+  --anchor: #78BDEB;
+  --sweep: #BFA9F4;
+  --warn: #F5C451;
+  --no: #F2826F;
+  --ink: #0D141C;
+  --display: 'Barlow Condensed', 'Arial Narrow', 'Helvetica Neue', sans-serif;
+  --body: 'Barlow', 'Helvetica Neue', 'Segoe UI', sans-serif;
+  --mono: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
+  color-scheme: dark;
+}
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.5;
+  -webkit-text-size-adjust: 100%;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+}
+
+.bar {
+  position: sticky;
+  top: env(safe-area-inset-top, 0px);
+  z-index: 5;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line);
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 8px;
+}
+.bar-inner {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--strike);
+}
+.switch {
+  display: flex;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px;
+  gap: 2px;
+}
+.switch button {
+  min-height: 40px;
+  min-width: 56px;
+  padding: 0 14px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font: 600 15px/1 var(--body);
+  cursor: pointer;
+}
+.switch button[aria-pressed="true"] {
+  background: var(--fg);
+  color: var(--ink);
+}
+.switch button:focus-visible { outline: 2px solid var(--anchor); outline-offset: 2px; }
+
+.wrap {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 24px 48px;
+}
+article {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+header { display: flex; flex-direction: column; gap: 8px; }
+h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(42px, 12vw, 60px);
+  line-height: 0.95;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+.lede { margin: 0; font-size: 19px; color: var(--fg); }
+.note { margin: 0; font-size: 15px; color: var(--muted); }
+
+section { display: flex; flex-direction: column; gap: 12px; }
+h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 1.1;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+p { margin: 0; }
+b, strong { font-weight: 700; }
+
+.panel {
+  background: var(--surface);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+.stack { display: flex; flex-direction: column; gap: 10px; }
+.list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.rule { flex-direction: row; gap: 14px; align-items: flex-start; }
+.rule-n {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--strike);
+  flex-shrink: 0;
+}
+
+.squad { border-top: 3px solid currentColor; }
+.squad.strike { color: var(--strike); }
+.squad.anchor { color: var(--anchor); }
+.squad.sweep { color: var(--sweep); }
+.squad-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+.squad-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 30px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+.squad-who { font-size: 15px; font-weight: 600; color: var(--muted); }
+.squad p { color: var(--fg); }
+
+.c-strike { color: var(--strike); }
+.c-anchor { color: var(--anchor); }
+.c-sweep { color: var(--sweep); }
+
+.state { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.chip {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--ink);
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.chip.ahead { background: var(--anchor); }
+.chip.behind { background: var(--strike); }
+.state-word {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.steps { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.steps li { display: flex; gap: 12px; align-items: flex-start; }
+.step-n {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 19px;
+}
+.steps li > span:last-child { padding-top: 4px; min-width: 0; }
+
+.sweep-map { display: block; width: 100%; max-width: 220px; height: auto; margin-top: 12px; }
+.sweep-map .grid { stroke: var(--line); stroke-width: 1; fill: none; }
+.sweep-map .bldg { fill: var(--bg); stroke: var(--strike); stroke-width: 2; }
+.sweep-map .drops circle { fill: var(--fg); }
+.sweep-map .post circle { fill: var(--sweep); }
+.sweep-map .post text { fill: var(--ink); font: 700 11px var(--mono); text-anchor: middle; }
+.sweep-map .cw { fill: none; stroke: var(--sweep); stroke-width: 2; stroke-linecap: round; }
+.sweep-map .cw-head { fill: var(--sweep); }
+
+.warn { border: 1px solid var(--warn); }
+.warn-head { display: flex; gap: 12px; align-items: flex-start; }
+.warn-head svg { flex-shrink: 0; margin-top: 3px; }
+.warn ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 6px; }
+
+.clock { margin: 0; padding: 0; list-style: none; background: var(--surface); border-radius: 12px; }
+.clock li { display: flex; gap: 14px; align-items: flex-start; padding: 14px 16px; }
+.clock li + li { border-top: 1px solid var(--line); }
+.clock .t {
+  width: 60px;
+  flex-shrink: 0;
+  padding-top: 2px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--strike);
+  font-variant-numeric: tabular-nums;
+}
+.clock li > span:last-child { min-width: 0; }
+
+.group-label {
+  margin: 6px 0 0;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+.shift { border: 1px solid var(--anchor); }
+.shift ul { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 8px; }
+.site { gap: 6px; }
+.site-head { display: flex; justify-content: space-between; align-items: baseline; gap: 4px 12px; flex-wrap: wrap; }
+.site-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 23px;
+  line-height: 1.1;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.site-meta { font-size: 14px; font-weight: 600; color: var(--muted); }
+.site-pts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 16px;
+  margin-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+.site-rate { font-family: var(--mono); font-weight: 700; font-size: 18px; color: var(--strike); }
+.site-rate small { font-size: 13px; font-weight: 500; color: var(--muted); margin-left: 4px; }
+.site-first { font-size: 14px; color: var(--muted); }
+
+.call code {
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--fg);
+  overflow-wrap: anywhere;
+}
+.call span { font-size: 16px; color: var(--muted); }
+.call { gap: 4px; }
+
+.dont { flex-direction: row; gap: 12px; align-items: flex-start; }
+.dont svg { flex-shrink: 0; margin-top: 3px; }
+
+footer {
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 15px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+<div class="bar">
+  <div class="bar-inner">
+    <p class="eyebrow">MVP · FOUNDRY</p>
+    <div class="switch" role="group" aria-label="Language / Dil">
+      <button type="button" id="btn-en" data-lang="en" aria-pressed="true">EN</button>
+      <button type="button" id="btn-tr" data-lang="tr" aria-pressed="false">TR</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+
+<article id="en" lang="en">
+  <header>
+    <h1>Foundry Playbook</h1>
+    <p class="lede">Three squads. One set of calls. Points over kills.</p>
+  </header>
+
+  <section>
+    <h2>The three rules</h2>
+    <ol class="list">
+      <li class="panel rule"><span class="rule-n">1</span><span><strong>Arsenal points win the battle.</strong> Personal points only change your own rewards.</span></li>
+      <li class="panel rule"><span class="rule-n">2</span><span><strong>Only follow calls that start with <code class="c-strike">LEAD:</code></strong> Leaders are named before each battle. Ignore everyone else in chat.</span></li>
+      <li class="panel rule"><span class="rule-n">3</span><span><strong>Joiners decide fights.</strong> This is a large-scale battle, so one strong march rarely wins alone. When a rally opens, join it with the proper leading hero. When a garrison is called, send troops.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Know your squad</h2>
+    <div class="stack">
+      <div class="panel squad strike">
+        <div class="squad-head"><span class="squad-name">STRIKE</span><span class="squad-who">Top 2</span></div>
+        <p>Rally and flip enemy buildings that hold a lot of arsenal points.</p>
+      </div>
+      <div class="panel squad anchor">
+        <div class="squad-head"><span class="squad-name">ANCHOR</span><span class="squad-who">Next 6</span></div>
+        <p>Garrison your assigned building. Send spare marches to reinforce other buildings. Stay put until a LEAD moves you.</p>
+      </div>
+      <div class="panel squad sweep">
+        <div class="squad-head"><span class="squad-name">SWEEP</span><span class="squad-who">Everyone else</span></div>
+        <p>Collect the dropped points at flips. Gather at Weapon Workshops. Reinforce when called.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Play the score</h2>
+    <div class="panel">
+      <div class="state"><span class="chip ahead">AHEAD</span><span class="state-word">Hold</span></div>
+      <p><b class="c-strike">STRIKE</b> + <b class="c-anchor">ANCHOR</b> hold the buildings with the most arsenal points.</p>
+      <p><b class="c-sweep">SWEEP</b> gathers at Weapon Workshops.</p>
+      <p class="note">Before workshops open: reinforce garrisons, and be ready to collect if the enemy flips one of ours.</p>
+    </div>
+    <div class="panel">
+      <div class="state"><span class="chip behind">BEHIND</span><span class="state-word">Flip</span></div>
+      <p>STRIKE calls a flip on an enemy building with a big point bank.</p>
+      <ol class="steps">
+        <li><span class="step-n">1</span><span><b class="c-sweep">SWEEP spreads out.</b> Wait 2–3 squares off the building, with someone on every side: north, east, south and west. The drops shoot out in a different direction every time.
+          <svg class="sweep-map" role="img" aria-label="Sweep positions: one player 2 to 3 squares off each side of the building, north, east, south and west, each collecting clockwise toward the next post" viewBox="0 0 200 200">
+            <defs><marker id="cw-en" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path class="cw-head" d="M0 1L9 5L0 9z"></path></marker></defs>
+            <path class="grid" d="M0 20H200M0 40H200M0 60H200M0 80H200M0 100H200M0 120H200M0 140H200M0 160H200M0 180H200M20 0V200M40 0V200M60 0V200M80 0V200M100 0V200M120 0V200M140 0V200M160 0V200M180 0V200"></path>
+            <g class="drops"><circle cx="64" cy="62" r="2.5"></circle><circle cx="138" cy="68" r="2.5"></circle><circle cx="58" cy="132" r="2.5"></circle><circle cx="146" cy="136" r="2.5"></circle><circle cx="108" cy="54" r="2.5"></circle><circle cx="90" cy="148" r="2.5"></circle><circle cx="148" cy="96" r="2.5"></circle><circle cx="52" cy="92" r="2.5"></circle></g>
+            <g><path class="cw" d="M116.9 32.1A70 70 0 0 1 167.9 83.1" marker-end="url(#cw-en)"></path><path class="cw" d="M167.9 116.9A70 70 0 0 1 116.9 167.9" marker-end="url(#cw-en)"></path><path class="cw" d="M83.1 167.9A70 70 0 0 1 32.1 116.9" marker-end="url(#cw-en)"></path><path class="cw" d="M32.1 83.1A70 70 0 0 1 83.1 32.1" marker-end="url(#cw-en)"></path></g>
+            <rect class="bldg" x="80" y="80" width="40" height="40" rx="3"></rect>
+            <g class="post"><circle cx="100" cy="30" r="11"></circle><text x="100" y="34">N</text></g>
+            <g class="post"><circle cx="170" cy="100" r="11"></circle><text x="170" y="104">E</text></g>
+            <g class="post"><circle cx="100" cy="170" r="11"></circle><text x="100" y="174">S</text></g>
+            <g class="post"><circle cx="30" cy="100" r="11"></circle><text x="30" y="104">W</text></g>
+          </svg>
+        </span></li>
+        <li><span class="step-n">2</span><span><b class="c-strike">STRIKE hits.</b> The rally takes the building.</span></li>
+        <li><span class="step-n">3</span><span><b class="c-sweep">SWEEP collects.</b> Grab every dropped point before the enemy does. Start at your post and work clockwise toward the next one (N → E, E → S, S → W, W → N), so no two sweepers go after the same drop.</span></li>
+        <li><span class="step-n">4</span><span><b class="c-anchor">Garrison it.</b> Fill it right away so they can't flip it back.</span></li>
+      </ol>
+      <p class="note">Never flip alone. If nobody is there to collect, the enemy picks up your drops.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Teleport warning</h2>
+    <div class="panel warn">
+      <div class="warn-head">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+        <p><strong>Teleporting pulls your troops out of every building you're in.</strong> Garrisoned in 5 buildings? All 5 empty at once.</p>
+      </div>
+      <p><b class="c-anchor">ANCHORS:</b> only teleport when the move is key, and post in chat first so someone can backfill.</p>
+      <ul>
+        <li>Many marches out? Send one march and speed it up instead.</li>
+        <li>One march in a low-priority building? Teleporting is fine.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>The clock</h2>
+    <ol class="clock">
+      <li><span class="t">0–15</span><span>Prototype Sites, Repair Facilities, Boiler Room, Transit Station</span></li>
+      <li><span class="t">15</span><span>Imperial Foundry, Munitions Warehouse and Mercenary Camp open</span></li>
+      <li><span class="t">30–60</span><span>Weapon Workshops appear. Dropped points matter most.</span></li>
+    </ol>
+    <p class="note">Minutes into the battle.</p>
+  </section>
+
+  <section>
+    <h2>The buildings</h2>
+    <div class="panel shift">
+      <p><strong>Priority changes as the battle goes on.</strong> The list below shows what each building is worth on paper. The right target right now is whatever the LEAD calls.</p>
+      <ul>
+        <li><b>Biggest point bank first.</b> Check the bullet icon and number on each building. If a Repair Facility is holding the most arsenal points on the map, it becomes the top target.</li>
+        <li><b>Utility before a shift.</b> A utility building can come first to set up the next phase, like taking Transit before a big rotation or the Munitions Warehouse before the fight at the Foundry.</li>
+      </ul>
+    </div>
+    <p class="group-label">SCORING</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Imperial Foundry</span><span class="site-meta">×1 · opens at 15</span></div>
+        <p>The biggest point engine on the map.</p>
+        <div class="site-pts"><span class="site-rate">+1,800<small>/ min</small></span><span class="site-first">9,000 first capture</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Prototype Site</span><span class="site-meta">×2 · from the start</span></div>
+        <p>The biggest points early in the battle.</p>
+        <div class="site-pts"><span class="site-rate">+1,200<small>/ min each</small></span><span class="site-first">6,000 first capture</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Repair Facility</span><span class="site-meta">×4 · from the start</span></div>
+        <p>Steady points on the outer map, one in each corner.</p>
+        <div class="site-pts"><span class="site-rate">+600<small>/ min each</small></span><span class="site-first">3,000 first capture</span></div>
+      </li>
+    </ul>
+    <p class="group-label">UTILITY</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Boiler Room</span><span class="site-meta">×1 · from the start</span></div>
+        <p>Halves the time it takes to capture a building, so flips land faster.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ min</small></span><span class="site-first">1,200 first capture</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Transit Station</span><span class="site-meta">×1 · from the start</span></div>
+        <p>Halves your teleport cooldown.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ min</small></span><span class="site-first">1,200 first capture</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Munitions Warehouse</span><span class="site-meta">×1 · opens at 15</span></div>
+        <p>Boosts your side's troop damage by 15%.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ min</small></span><span class="site-first">1,200 first capture</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Mercenary Camp</span><span class="site-meta">×1 · opens at 15</span></div>
+        <p>Sends mercenaries to attack enemy-held buildings.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ min</small></span><span class="site-first">1,200 first capture</span></div>
+      </li>
+    </ul>
+    <p class="group-label">GATHER</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Weapon Workshop</span><span class="site-meta">random spots · last 30 min</span></div>
+        <p>No passive points. Send a march to gather the points stored inside.</p>
+      </li>
+    </ul>
+    <p class="note">The first-capture bonus pays once. After that, points come in every minute you hold the building.</p>
+  </section>
+
+  <section>
+    <h2>The calls</h2>
+    <div class="stack">
+      <div class="panel call"><code>LEAD: FLIP → Proto 2</code><span>STRIKE hits it, SWEEP collects the drops.</span></div>
+      <div class="panel call"><code>LEAD: GARRISON → Boiler</code><span>Send troops to hold that building.</span></div>
+      <div class="panel call"><code>LEAD: SWEEP → Workshop</code><span>Go there and collect.</span></div>
+      <div class="panel call"><code>LEAD: MOVE [name] → Transit</code><span>That anchor switches buildings.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Don't</h2>
+    <ul class="list">
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Hit cities for personal points.</span></li>
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Flip a building alone.</span></li>
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Leave the battle in the last 15 minutes. Getting back in takes 12.</span></li>
+    </ul>
+  </section>
+
+  <footer><span>by Tocopoco</span><span>MVP Alliance</span></footer>
+</article>
+
+<article id="tr" lang="tr" hidden>
+  <header>
+    <h1>Foundry Oyun Planı</h1>
+    <p class="lede">Üç takım. Tek tip çağrılar. Öldürmek değil, puan önemli.</p>
+    <p class="note">Takım adları, çağrılar ve bina adları sohbetteki gibi İngilizce kalır.</p>
+  </header>
+
+  <section>
+    <h2>Üç kural</h2>
+    <ol class="list">
+      <li class="panel rule"><span class="rule-n">1</span><span><strong>Savaşı cephanelik puanı kazandırır.</strong> Kişisel puan sadece senin kendi ödülünü değiştirir.</span></li>
+      <li class="panel rule"><span class="rule-n">2</span><span><strong>Sadece <code class="c-strike">LEAD:</code> ile başlayan çağrıları takip et.</strong> Liderler her savaştan önce belirlenir. Sohbette diğer herkesi görmezden gel.</span></li>
+      <li class="panel rule"><span class="rule-n">3</span><span><strong>Katılanlar savaşı belirler.</strong> Bu büyük ölçekli bir savaş, tek güçlü bir ordu nadiren tek başına kazanır. Ralli açılınca doğru lider kahramanla katıl. Garnizon çağrılınca ordu gönder.</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>Takımını bil</h2>
+    <div class="stack">
+      <div class="panel squad strike">
+        <div class="squad-head"><span class="squad-name">STRIKE</span><span class="squad-who">En güçlü 2</span></div>
+        <p>Çok cephanelik puanı olan düşman binalarına ralli yapar ve ele geçirir (flip).</p>
+      </div>
+      <div class="panel squad anchor">
+        <div class="squad-head"><span class="squad-name">ANCHOR</span><span class="squad-who">Sonraki 6</span></div>
+        <p>Görevli olduğun binada garnizon ol. Boştaki ordularını diğer binalara destek gönder. Bir LEAD seni taşımadıkça binanı bırakma.</p>
+      </div>
+      <div class="panel squad sweep">
+        <div class="squad-head"><span class="squad-name">SWEEP</span><span class="squad-who">Diğer herkes</span></div>
+        <p>Flip olan binanın etrafına saçılan puanları topla. Silah Atölyelerinde (Weapon Workshop) topla. Çağrılınca destek gönder.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skora göre oyna</h2>
+    <div class="panel">
+      <div class="state"><span class="chip ahead">ÖNDEYSEK</span><span class="state-word">Tut</span></div>
+      <p><b class="c-strike">STRIKE</b> + <b class="c-anchor">ANCHOR</b> en çok cephanelik puanı olan binaları tutar.</p>
+      <p><b class="c-sweep">SWEEP</b> Silah Atölyelerinde toplar.</p>
+      <p class="note">Atölyeler açılmadan önce: garnizonlara destek ver ve düşman bizim bir binamızı alırsa saçılan puanları toplamaya hazır ol.</p>
+    </div>
+    <div class="panel">
+      <div class="state"><span class="chip behind">GERİDEYSEK</span><span class="state-word">Flip</span></div>
+      <p>STRIKE, çok puanı olan bir düşman binası için flip çağırır.</p>
+      <ol class="steps">
+        <li><span class="step-n">1</span><span><b class="c-sweep">SWEEP etrafa yayılır.</b> Binadan 2–3 kare uzakta bekle, her tarafta bir oyuncu olsun: kuzey, doğu, güney ve batı. Puanlar her seferinde farklı bir yöne saçılır.
+          <svg class="sweep-map" role="img" aria-label="SWEEP yerleşimi: binanın her tarafında, 2-3 kare uzakta bir oyuncu: kuzey, doğu, güney, batı; her biri saat yönünde bir sonraki noktaya doğru toplar" viewBox="0 0 200 200">
+            <defs><marker id="cw-tr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path class="cw-head" d="M0 1L9 5L0 9z"></path></marker></defs>
+            <path class="grid" d="M0 20H200M0 40H200M0 60H200M0 80H200M0 100H200M0 120H200M0 140H200M0 160H200M0 180H200M20 0V200M40 0V200M60 0V200M80 0V200M100 0V200M120 0V200M140 0V200M160 0V200M180 0V200"></path>
+            <g class="drops"><circle cx="64" cy="62" r="2.5"></circle><circle cx="138" cy="68" r="2.5"></circle><circle cx="58" cy="132" r="2.5"></circle><circle cx="146" cy="136" r="2.5"></circle><circle cx="108" cy="54" r="2.5"></circle><circle cx="90" cy="148" r="2.5"></circle><circle cx="148" cy="96" r="2.5"></circle><circle cx="52" cy="92" r="2.5"></circle></g>
+            <g><path class="cw" d="M116.9 32.1A70 70 0 0 1 167.9 83.1" marker-end="url(#cw-tr)"></path><path class="cw" d="M167.9 116.9A70 70 0 0 1 116.9 167.9" marker-end="url(#cw-tr)"></path><path class="cw" d="M83.1 167.9A70 70 0 0 1 32.1 116.9" marker-end="url(#cw-tr)"></path><path class="cw" d="M32.1 83.1A70 70 0 0 1 83.1 32.1" marker-end="url(#cw-tr)"></path></g>
+            <rect class="bldg" x="80" y="80" width="40" height="40" rx="3"></rect>
+            <g class="post"><circle cx="100" cy="30" r="11"></circle><text x="100" y="34">K</text></g>
+            <g class="post"><circle cx="170" cy="100" r="11"></circle><text x="170" y="104">D</text></g>
+            <g class="post"><circle cx="100" cy="170" r="11"></circle><text x="100" y="174">G</text></g>
+            <g class="post"><circle cx="30" cy="100" r="11"></circle><text x="30" y="104">B</text></g>
+          </svg>
+        </span></li>
+        <li><span class="step-n">2</span><span><b class="c-strike">STRIKE vurur.</b> Ralli binayı alır.</span></li>
+        <li><span class="step-n">3</span><span><b class="c-sweep">SWEEP toplar.</b> Saçılan puanların hepsini düşmandan önce kap. Kendi noktandan başla ve saat yönünde bir sonraki noktaya doğru topla (K → D, D → G, G → B, B → K). Böylece iki kişi aynı puanın peşine düşmez.</span></li>
+        <li><span class="step-n">4</span><span><b class="c-anchor">Garnizon koy.</b> Hemen doldur ki binayı geri alamasınlar.</span></li>
+      </ol>
+      <p class="note">Asla tek başına flip yapma. Toplayacak kimse yoksa saçılan puanları düşman toplar.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Işınlanma uyarısı</h2>
+    <div class="panel warn">
+      <div class="warn-head">
+        <svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--warn)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path></svg>
+        <p><strong>Işınlanınca bulunduğun her binadaki orduların geri çekilir.</strong> 5 binada garnizonsan 5'i birden boşalır.</p>
+      </div>
+      <p><b class="c-anchor">ANCHOR'LAR:</b> sadece gerçekten önemliyse ışınlan ve önce sohbete yaz ki biri yerini doldursun.</p>
+      <ul>
+        <li>Dışarıda çok ordun mu var? Işınlanma, bir ordu gönder ve hızlandır.</li>
+        <li>Düşük öncelikli bir binada tek ordun mu var? Işınlanabilirsin.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Zamanlama</h2>
+    <ol class="clock">
+      <li><span class="t">0–15</span><span>Prototype Sites, Repair Facilities, Boiler Room, Transit Station</span></li>
+      <li><span class="t">15</span><span>Imperial Foundry, Munitions Warehouse ve Mercenary Camp açılır</span></li>
+      <li><span class="t">30–60</span><span>Weapon Workshops çıkar. Saçılan puanlar en önemli hâle gelir.</span></li>
+    </ol>
+    <p class="note">Savaşın başından itibaren dakika.</p>
+  </section>
+
+  <section>
+    <h2>Binalar</h2>
+    <div class="panel shift">
+      <p><strong>Öncelik savaş ilerledikçe değişir.</strong> Aşağıdaki liste her binanın kâğıt üzerindeki değerini gösterir. Şu anki doğru hedef, LEAD'in çağırdığı binadır.</p>
+      <ul>
+        <li><b>Önce en çok puan biriktiren bina.</b> Her binanın üstündeki mermi simgesine ve sayıya bak. En çok cephanelik puanını bir Repair Facility tutuyorsa, en önemli hedef odur.</li>
+        <li><b>Değişimden önce destek binası.</b> Bir sonraki aşamaya hazırlanmak için önce bir destek binası alınabilir. Örneğin büyük bir yer değiştirmeden önce Transit, Foundry'deki savaştan önce Munitions Warehouse.</li>
+      </ul>
+    </div>
+    <p class="group-label">PUAN BİNALARI</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Imperial Foundry</span><span class="site-meta">×1 · 15. dk'da açılır</span></div>
+        <p>Haritadaki en büyük puan kaynağı.</p>
+        <div class="site-pts"><span class="site-rate">+1.800<small>/ dk</small></span><span class="site-first">9.000 ilk ele geçirme</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Prototype Site</span><span class="site-meta">×2 · baştan açık</span></div>
+        <p>Savaşın başında en çok puan veren bina.</p>
+        <div class="site-pts"><span class="site-rate">+1.200<small>/ dk, her biri</small></span><span class="site-first">6.000 ilk ele geçirme</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Repair Facility</span><span class="site-meta">×4 · baştan açık</span></div>
+        <p>Dış haritada sabit puan, her köşede bir tane.</p>
+        <div class="site-pts"><span class="site-rate">+600<small>/ dk, her biri</small></span><span class="site-first">3.000 ilk ele geçirme</span></div>
+      </li>
+    </ul>
+    <p class="group-label">DESTEK BİNALARI</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Boiler Room</span><span class="site-meta">×1 · baştan açık</span></div>
+        <p>Bina ele geçirme süresini yarıya indirir, flip'ler daha hızlı olur.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ dk</small></span><span class="site-first">1.200 ilk ele geçirme</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Transit Station</span><span class="site-meta">×1 · baştan açık</span></div>
+        <p>Işınlanma bekleme süresini yarıya indirir.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ dk</small></span><span class="site-first">1.200 ilk ele geçirme</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Munitions Warehouse</span><span class="site-meta">×1 · 15. dk'da açılır</span></div>
+        <p>Tarafının ordu hasarını %15 artırır.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ dk</small></span><span class="site-first">1.200 ilk ele geçirme</span></div>
+      </li>
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Mercenary Camp</span><span class="site-meta">×1 · 15. dk'da açılır</span></div>
+        <p>Düşmanın tuttuğu binalara saldırmak için paralı asker gönderir.</p>
+        <div class="site-pts"><span class="site-rate">+240<small>/ dk</small></span><span class="site-first">1.200 ilk ele geçirme</span></div>
+      </li>
+    </ul>
+    <p class="group-label">TOPLAMA</p>
+    <ul class="list">
+      <li class="panel site">
+        <div class="site-head"><span class="site-name">Weapon Workshop</span><span class="site-meta">rastgele yerler · son 30 dk</span></div>
+        <p>Pasif puan yok. İçindeki puanları toplamak için ordu gönder.</p>
+      </li>
+    </ul>
+    <p class="note">İlk ele geçirme bonusu bir kez verilir. Sonra binayı tuttuğun her dakika puan gelir.</p>
+  </section>
+
+  <section>
+    <h2>Çağrılar</h2>
+    <div class="stack">
+      <div class="panel call"><code>LEAD: FLIP → Proto 2</code><span>STRIKE vurur, SWEEP saçılan puanları toplar.</span></div>
+      <div class="panel call"><code>LEAD: GARRISON → Boiler</code><span>O binayı tutmak için ordu gönder.</span></div>
+      <div class="panel call"><code>LEAD: SWEEP → Workshop</code><span>Oraya git ve topla.</span></div>
+      <div class="panel call"><code>LEAD: MOVE [isim] → Transit</code><span>O anchor bina değiştirir.</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Yapma</h2>
+    <ul class="list">
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Kişisel puan için şehirlere saldırma.</span></li>
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Bir binayı tek başına flip yapma.</span></li>
+      <li class="panel dont"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--no)" stroke-width="2.5" stroke-linecap="round"><path d="M6 6l12 12"></path><path d="M18 6L6 18"></path></svg><span>Son 15 dakikada savaştan çıkma. Geri girmek 12 dakika sürer.</span></li>
+    </ul>
+  </section>
+
+  <footer><span>Tocopoco</span><span>MVP Alliance</span></footer>
+</article>
+
+</main>
+
+<script>
+(function () {
+  var KEY = 'foundry-lang';
+
+  function setLang(lang) {
+    var en = document.getElementById('en');
+    var tr = document.getElementById('tr');
+    var buttons = document.querySelectorAll('[data-lang]');
+    var i;
+    en.hidden = lang !== 'en';
+    tr.hidden = lang !== 'tr';
+    document.documentElement.lang = lang;
+    for (i = 0; i < buttons.length; i++) {
+      buttons[i].setAttribute('aria-pressed', buttons[i].getAttribute('data-lang') === lang ? 'true' : 'false');
+    }
+    try { localStorage.setItem(KEY, lang); } catch (e) {}
+  }
+
+  function onClick(e) {
+    var lang = e.currentTarget.getAttribute('data-lang');
+    setLang(lang);
+    window.scrollTo(0, 0);
+  }
+
+  var start = 'en';
+  try {
+    var saved = localStorage.getItem(KEY);
+    if (saved === 'en' || saved === 'tr') { start = saved; }
+  } catch (e) {}
+  if (location.hash === '#tr') { start = 'tr'; }
+  if (location.hash === '#en') { start = 'en'; }
+
+  document.getElementById('btn-en').addEventListener('click', onClick);
+  document.getElementById('btn-tr').addEventListener('click', onClick);
+  setLang(start);
+})();
+</script>
+</body>
+</html>
